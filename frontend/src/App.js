@@ -23,7 +23,7 @@ function init() {
   camera.position.set(0,0,1000);
   camera.lookAt(0,0,0);
 
-  renderer = new THREE.WebGLRenderer();
+  renderer = new THREE.WebGLRenderer({alpha: true});
   renderer.setSize(window.innerWidth, window.innerHeight);
 
   document.body.appendChild(renderer.domElement);
