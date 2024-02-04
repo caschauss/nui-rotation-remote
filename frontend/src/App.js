@@ -46,9 +46,9 @@ function App() {
       .then((res) => res.json())
       .then((data) => {
         if (data.orientationData) {
-          setRot1(data.orientationData.alpha);
-          setRot2(data.orientationData.beta);
-          setRot3(data.orientationData.gamma);
+          setRot1(THREE.MathUtils.degToRad(data.orientationData.alpha));
+          setRot2(THREE.MathUtils.degToRad(data.orientationData.beta));
+          setRot3(THREE.MathUtils.degToRad(data.orientationData.gamma));
         }
         
       });
