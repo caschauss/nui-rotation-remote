@@ -26,7 +26,7 @@ app.post("/testAPI", async (req, res) => {
         res.json({ message: "Received orientation data successfully" });
     } else {
         res.status(418).json({ error: "Missing orientation data in the request" });
-        console.log("Error");
+        console.log(req.body);
     }
 });
 

@@ -1,43 +1,45 @@
-import React from "react";
+import React, { useState } from 'react';
 
-var orientationData;
+const OrientationComponent = () => {
+  const [orientationData, setOrientationData] = useState(null);
 
-const handleOrientation = (event) => {
-  orientationData = {
-    alpha: event.alpha,
-    beta: event.beta,
-    gamma: event.gamma
+  const handleOrientationChange = (event) => {
+    setOrientationData({
+      alpha: event.alpha,
+      beta: event.beta,
+      gamma: event.gamma,
+    })
+  }
+
+  const sendOrientationData = () => {
+    window.addEventListener('deviceorientation', handleOrientationChange);
+    const apiUrl = 'http://192.168.119.125:3001/testAPI';
+    if (orientationData !== null) {
+      fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ "orientationData": orientationData }),
+      })
+        .then((res => res.json()))
+        .then(data => {
+          console.log(data);
+        })
+      window.removeEventListener('deviceorientation', handleOrientationChange);
+    }
   };
-};
 
-if (window.DeviceOrientationEvent) {
-  window.addEventListener("deviceorientation", handleOrientation);
-} else {
-  console.log("Device orientation not supported.");
-}
 
-const startService = () => {
-  fetch("http://192.168.119.125:3001/testAPI", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ orientationData })
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-    });
-};
-
-function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <button style={{ width: "100%", height: "10vh" }} onClick={startService}>
-          Start Service
-        </button>
-      </header>
+    <div>
+      <h1>Device Orientation Component</h1>
+      <p>This component sends device orientation data to the backend server when the button is pressed.</p>
+      <button onClick={sendOrientationData}>
+        SEND
+      </button>
     </div>
   );
-}
+};
 
-export default App;
+export default OrientationComponent;
