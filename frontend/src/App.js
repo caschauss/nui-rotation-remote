@@ -33,11 +33,11 @@ function App() {
   const [rot2, setRot2] = useState(0);
   const [rot3, setRot3] = useState(0);
 
+  const [intervalId, setIntervalId] = useState(null);
+
   animate();
 
-  function animate() {
-    requestAnimationFrame(animate);
-
+  const getOrientationData = () => {
     fetch("http://192.168.119.125:3001/getData", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -50,8 +50,19 @@ function App() {
           setRot2(THREE.MathUtils.degToRad(data.orientationData.beta));
           setRot3(THREE.MathUtils.degToRad(data.orientationData.gamma));
         }
-        
       });
+  }
+
+  const startGettingData = () => {
+    setIntervalId(setInterval(getOrientationData, 15));
+  };
+
+  const stopGettingData = () => {
+    clearInterval(intervalId);
+  };
+
+  function animate() {
+    requestAnimationFrame(animate);
 
     mesh.rotation.x = rot1;
     mesh.rotation.y = rot2;
@@ -63,7 +74,8 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        
+      <button onClick={startGettingData}>START</button>
+      <button onClick={stopGettingData}>STOP</button>
       </header>
     </div>
   );
