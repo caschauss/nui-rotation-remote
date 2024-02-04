@@ -6,9 +6,28 @@ var geometry, material, mesh;
 var orientationdata;
 var ori = false;
 
-//init();
-//animate();
+function init() {
+  camera = new THREE.PerspectiveCamera(95, window.innerWidth / window.innerHeight, 1, 1000);
+  camera.position.z = 750;
 
+  scene = new THREE.Scene();
+
+  geometry = new THREE.OctahedronGeometry(400, 0);
+  material = new THREE.MeshBasicMaterial({
+    color: 0x0077ff,
+    wireframe: true,
+    wireframeLinewidth: 30
+  });
+
+  mesh = new THREE.Mesh(geometry, material);
+  scene.add(mesh);
+
+  renderer = new THREE.WebGLRenderer();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+
+  document.body.appendChild(renderer.domElement);
+}
+init();
 
 function App() {
 
@@ -16,7 +35,7 @@ function App() {
   const [rot2, setRot2] = useState(0);
   const [rot3, setRot3] = useState(0);
 
-  init();
+  //init();
   //if (ori){
   animate();//}
 
@@ -48,28 +67,6 @@ function App() {
         console.log(data.orientationData);
       });
   };
-
-  function init() {
-    camera = new THREE.PerspectiveCamera(95, window.innerWidth / window.innerHeight, 1, 1000);
-    camera.position.z = 750;
-
-    scene = new THREE.Scene();
-
-    geometry = new THREE.OctahedronGeometry(400, 0);
-    material = new THREE.MeshBasicMaterial({
-      color: 0x0077ff,
-      wireframe: true,
-      wireframeLinewidth: 30
-    });
-
-    mesh = new THREE.Mesh(geometry, material);
-    scene.add(mesh);
-
-    renderer = new THREE.WebGLRenderer();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-
-    document.body.appendChild(renderer.domElement);
-  }
 
   function animate() {
     requestAnimationFrame(animate);
