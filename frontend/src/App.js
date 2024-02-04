@@ -1,14 +1,21 @@
 import React, { useState } from "react";
 import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 var camera, scene, renderer;
 var geometry, material, mesh;
+const loader = new GLTFLoader();
 
 function init() {
   camera = new THREE.PerspectiveCamera(95, window.innerWidth / window.innerHeight, 1, 1000);
   camera.position.z = 750;
 
   scene = new THREE.Scene();
+
+  loader.load( './models/Spaceshuttle.glb', function ( gltf ) {
+    mesh = gltf.scene;
+    scene.add(mesh);
+  });
 
   geometry = new THREE.OctahedronGeometry(400, 0);
   material = new THREE.MeshBasicMaterial({
@@ -17,8 +24,8 @@ function init() {
     wireframeLinewidth: 30
   });
 
-  mesh = new THREE.Mesh(geometry, material);
-  scene.add(mesh);
+  //mesh = new THREE.Mesh(geometry, material);
+  //scene.add(mesh);
 
   renderer = new THREE.WebGLRenderer();
   renderer.setSize(window.innerWidth, window.innerHeight);
