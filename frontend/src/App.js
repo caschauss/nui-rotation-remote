@@ -3,8 +3,6 @@ import * as THREE from 'three';
 
 var camera, scene, renderer;
 var geometry, material, mesh;
-var orientationdata;
-var ori = false;
 
 function init() {
   camera = new THREE.PerspectiveCamera(95, window.innerWidth / window.innerHeight, 1, 1000);
@@ -35,38 +33,7 @@ function App() {
   const [rot2, setRot2] = useState(0);
   const [rot3, setRot3] = useState(0);
 
-  //init();
-  //if (ori){
-  animate();//}
-
-  const startService = () => {
-    // adding DevOrEvent to doc
-    if (window.DeviceOrientationEvent) {
-      window.addEventListener("deviceorientation", handleOrientation);
-    } else {
-      console.log("Device orientation not supported.");
-    }
-  };
-
-  // defining JSON object
-  const handleOrientation = (event) => {
-    const orientationData = {
-      alpha: event.alpha,
-      beta: event.beta,
-      gamma: event.gamma
-    };// die daten zur rotation des globus nutzen
-    ori = true;
-    // CHANGE URL IF NECESSARY
-    fetch("http://192.168.119.125:3001/testAPI", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ orientationData })
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data.orientationData);
-      });
-  };
+  animate();
 
   function animate() {
     requestAnimationFrame(animate);
@@ -88,7 +55,7 @@ function App() {
 
     mesh.rotation.x = rot1;
     mesh.rotation.y = rot2;
-    mesh.rotation.z = rot3;//hier orientatio data reinhauen
+    mesh.rotation.z = rot3;
 
     renderer.render(scene, camera);
   }
@@ -96,9 +63,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <button style={{ width: "100%", height: "10vh" }} onClick={startService}>
-          Start Service
-        </button>
+        
       </header>
     </div>
   );
