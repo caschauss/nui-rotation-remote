@@ -12,7 +12,7 @@ function init() {
     mesh = gltf.scene.children[0];
     mesh.scale.set(6,6,6);
     mesh.position.set(0,0,0);
-    light = new THREE.HemisphereLight( 0xbbbbff, 0x444422 );
+    light = new THREE.HemisphereLight( 0xbbbbff, 0x444422, 10 );
     light.position.set( 1, 1, 0 );
     scene.add( light );
     scene.add(mesh);
@@ -68,9 +68,9 @@ function App() {
     requestAnimationFrame(animate);
 
     if (mesh != null) {
-      mesh.rotation.x = rot1;
-      mesh.rotation.y = rot2;
-      mesh.rotation.z = rot3;
+      mesh.rotation.x = rot2;
+      mesh.rotation.y = rot1;
+      mesh.rotation.z = -rot3;
     }
 
     renderer.render(scene, camera);
