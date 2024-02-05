@@ -13,7 +13,7 @@ const OrientationComponent = () => {
   };
 
   const sendOrientationData = () => {
-    const apiUrl = 'http://192.168.119.125:3001/testAPI';
+    const apiUrl = 'http://192.168.43.22:3001/testAPI';
     if (orientationData !== null) {
       fetch(apiUrl, {
         method: 'POST',

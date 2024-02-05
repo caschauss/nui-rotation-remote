@@ -2,28 +2,27 @@ import React, { useState } from "react";
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-var camera, scene, renderer;
-var geometry, material, mesh, light;
+var camera, scene, renderer, mesh, light;
 const loader = new GLTFLoader();
 
 function init() {
   scene = new THREE.Scene();
   loader.load("https://ipfs.io/ipfs/QmYqwNYxqmu4z39emTo7h9D62rbwm1esAmbAf2PctAyUvu?filename=Flamingo.glb", function (gltf) {
     mesh = gltf.scene.children[0];
-    mesh.scale.set(6,6,6);
-    mesh.position.set(0,0,0);
-    light = new THREE.HemisphereLight( 0xbbbbff, 0x444422, 10 );
-    light.position.set( 1, 1, 0 );
-    scene.add( light );
+    mesh.scale.set(6, 6, 6);
+    mesh.position.set(0, 0, 0);
+    light = new THREE.HemisphereLight(0xbbbbff, 0x444422, 10);
+    light.position.set(1, 1, 0);
+    scene.add(light);
     scene.add(mesh);
   });
 
 
   camera = new THREE.PerspectiveCamera(95, window.innerWidth / window.innerHeight, 1, 1000);
-  camera.position.set(0,0,1000);
-  camera.lookAt(0,0,0);
+  camera.position.set(0, 0, 1000);
+  camera.lookAt(0, 0, 0);
 
-  renderer = new THREE.WebGLRenderer({alpha: true});
+  renderer = new THREE.WebGLRenderer({ alpha: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
 
   document.body.appendChild(renderer.domElement);
@@ -41,7 +40,7 @@ function App() {
   animate();
 
   const getOrientationData = () => {
-    fetch("http://192.168.5.156:3001/getData", {
+    fetch("http://192.168.43.22:3001/getData", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message: "" })
@@ -79,8 +78,8 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-      <button onClick={startGettingData}>START</button>
-      <button onClick={stopGettingData}>STOP</button>
+        <button onClick={startGettingData}>START</button>
+        <button onClick={stopGettingData}>STOP</button>
       </header>
     </div>
   );
